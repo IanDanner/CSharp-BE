@@ -1,0 +1,50 @@
+@{
+    ViewData["Title"] = "Activity Page";
+}
+
+<div>
+    <h1>@ViewBag.Activity.title</h1>
+    <button>
+        @if(ViewBag.Activity.userId == ViewBag.Logged.id)
+        {
+            <a href="/delete_activity/@ViewBag.Activity.id">Delete</a>
+        }
+        else
+        {
+            bool isGoing = false;
+            foreach (Participant participant in ViewBag.Activity.Participants)
+            {
+                if(participant.usersId == ViewBag.Logged.id)
+                {
+                    isGoing = true;
+                }
+            }
+            if(isGoing == true)
+            {
+                <a href="/leave_activity/@ViewBag.Activity.id">Leave</a>
+            }
+            if(isGoing == false)
+            {
+                <a href="/join_activity/@ViewBag.Activity.id">Join</a>
+            }
+        }
+    </button>
+    <div class="activityInfo">
+        <h3>Event Coordinator: @ViewBag.Activity.user.firstName</h3>
+        <h3>Description:</h3>
+        <p>@ViewBag.Activity.description</p>
+        <h3>Participants:</h3>
+        <ul style="text-align: left">
+            @foreach(Participant part in ViewBag.Activity.Participants)
+            {
+                @if(part.usersId == part.activities.userId){
+                    break;
+                }
+                else
+                {
+                    <li>@part.users.firstName</li>
+                }
+            }
+        </ul>
+    </div>
+</div>

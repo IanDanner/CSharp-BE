@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+    <h4>Welcome @ViewBag.Logged.firstName</h4>
+</div>
+<div>
+    <span>@TempData["Error"]</span>
+    <table>
+        <thead>
+            <tr>
+                <th>Activity</th>
+                <th>Date and Time</th>
+                <th>Duration</th>
+                <th>Event Coordinator</th>
+                <th>Number of Participants</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(Activitie activity in ViewBag.Activities)
+            {
+                int amount = (activity.Participants.Count)-1;
+                <tr>
+                    <td><a href="/activity/@activity.id">@activity.title</a></td>
+                    <td>@activity.startDate.ToString("MM/dd @ h:mm tt")</td>
+                    <td>@activity.duration</td>
+                    <td>@activity.user.firstName</td>
+                    <td>@amount</td>
+                    <td>
+                    @if(activity.userId == ViewBag.Logged.id)
+                    {
+                        <a href="/delete_activity/@activity.id">Delete</a>
+                    }
+                    else
+                    {
+                        bool isGoing = false;
+                        foreach (Participant participant in activity.Participants)
+                        {
+                            if(participant.usersId == ViewBag.Logged.id)
+                            {
+                                isGoing = true;
+                            }
+                        }
+                        if(isGoing == true)
+                        {
+                            <a href="/leave_activity/@activity.id">Leave</a>
+                        }
+                        if(isGoing == false)
+                        {
+                            <a href="/join_activity/@activity.id">Join</a>
+                        }
+                    }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button><a href="/new_activity">Add New Activity!</a></button>
+</div>

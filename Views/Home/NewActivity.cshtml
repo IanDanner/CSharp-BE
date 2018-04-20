@@ -1,0 +1,30 @@
+@{
+    ViewData["Title"] = "New Activity";
+}
+
+<div>
+    @model C_SharpBelt.Models.ActivitieCreate
+    <ul style="text-align:left">
+    <form action="/create_activity" method="post">
+        <span>@TempData["Error"]</span>
+        <span asp-validation-for="title"></span>
+        <li><label asp-for="title"></label>
+        <input asp-for="title"/></li>
+        <span asp-validation-for="startDate"></span>
+        <li><label asp-for="startDate"></label>
+        <input asp-for="startDate"/></li>
+        <span asp-validation-for="duration"></span>
+        <li><label asp-for="duration"></label>
+        <input asp-for="duration"/></li>
+        <select name="durationTime">
+            <option value="Minutes">Minutes</option>
+            <option value="Hours">Hours</option>
+            <option value="Days">Days</option>
+        </select>
+        <span asp-validation-for="description"></span>
+        <li><label asp-for="description"></label>
+        <textarea asp-for="description" cpls="28" rows="8"></textarea></li>
+        <li><button type="submit">Create</button></li>
+    </form>
+    </ul>
+</div>
