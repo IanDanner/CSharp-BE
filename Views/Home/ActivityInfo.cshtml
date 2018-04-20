@@ -38,7 +38,7 @@
             @foreach(Participant part in ViewBag.Activity.Participants)
             {
                 @if(part.usersId == part.activities.userId){
-                    break;
+                    continue;
                 }
                 else
                 {
